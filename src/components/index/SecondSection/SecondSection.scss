@@ -1,0 +1,77 @@
+ .second-index {
+        position: relative;
+        width: 100%;
+        background: #000;
+        margin-left: 86px;
+
+        &__wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 0;
+        }
+        &__content {
+            display: flex;
+            border-bottom: 3px solid #fff;
+            margin-bottom: 150px;
+            &__left {
+                width: 700px;
+                height: 300px;
+                .left-wrap {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    padding: 40px;
+                    height: 100%;
+                    &__text {
+                        color: #fff;
+                        >h1 {
+                            font-family: 'notosanskr', sans-serif;
+                            font-size: 50px;
+                            font-weight: 800;
+                            line-height: 1.2;
+                            margin-bottom: 30px;
+                        }
+                        >p { font-size: 18px; line-height: 30px; }
+                    }
+                }
+            }
+            &__right {
+                width: 500px;
+                height: 300px;
+                display: flex;
+                align-items: center;
+
+               >img {
+                    width: 150px;
+               }
+
+            }
+        }
+        &__text {
+            color: #fff;
+            font-size: 130px;
+            display: flex;
+            flex: 0 0 auto;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: marquee 120s linear infinite;
+            >span {
+                color: #fff;
+                font-family: 'Montserrat', sans-serif;
+                opacity: 0.1;
+            }
+          
+        }
+    }
+    @keyframes marquee {
+        0% {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+        100% {
+            -webkit-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-50%, 0, 0);
+        }
+    }

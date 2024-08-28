@@ -1,0 +1,67 @@
+.third-index {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        background: #000;
+        margin-left: 86px;
+        &__wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        &__title {
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+
+            margin-bottom: 40px;
+            >span { font-size: 60px; }
+            
+        }
+        &__content {
+            display: flex;
+
+            &__left {
+                width: 600px;
+                height: 650px;
+                background: url("./images/map/marker-map.png");
+
+            }
+            &__right {
+                width: 600px;
+                height: 650px;
+                background: #98bb45;
+
+                .left-wrap {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    padding: 80px;
+                    height: 100%;
+                    &__text {
+                        color: #000;
+                        >h1 {
+                            font-family: 'notosanskr', sans-serif;
+                            font-size: 55px;
+                            font-weight: 800;
+                            line-height: 1.2;
+                            margin-bottom: 40px;
+                        }
+                        >p { font-size: 22px; }
+                    }
+                    .sample-btn {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 280px; 
+                        height: 60px;
+                        padding: 0 30px;
+                        border-radius: 40px;
+                        color: #fff;
+                        background: #75A2FF;
+                        font-size: 24px;
+                    }
+                }
+            }
+        }
+    }
