@@ -5,6 +5,7 @@ import Author from "./pages/Author";
 import "./App.scss";
 import "./scss/reset.scss";
 import "./scss/common.scss"
+import Novel from "./pages/novel/Novel";
 
 function Router() {
   return (
@@ -14,6 +15,7 @@ function Router() {
         <Routes className="user-view-guard">
           <Route path="/" element={<Index />} />
           <Route path="/author" element={<Author />} />
+          <Route path="/novel" element={<Novel />} />
         </Routes>
       </div>
     </>
