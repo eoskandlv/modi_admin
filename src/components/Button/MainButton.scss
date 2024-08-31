@@ -1,0 +1,16 @@
+.button {
+        padding: 15px 60px;
+        border-radius: 50px;
+        background-color: #ffffff;
+        border: 1px solid #fff;
+        color: #618311;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 5px 5px 5px #7da817;
+        cursor: pointer;
+        &:hover {
+            background-color: #618311;
+            border: 1px solid #618311;
+            color: #fff;
+            transition: 0.3s ease-out;
+        }
+    }

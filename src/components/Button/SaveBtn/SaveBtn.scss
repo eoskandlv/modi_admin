@@ -1,0 +1,12 @@
+.button {
+    &__actions {
+        cursor: pointer;
+        box-shadow: 3px 3px 5px #dfdfdf;
+        border-radius: 10px;
+        border: none;
+        background-color: #98bb45;
+        color: #fff;
+        width: 180px;
+        min-height: 50px;
+    }
+}  

@@ -1,0 +1,92 @@
+ .fifth-index {
+        width: 100%;
+        background: #000;
+        margin-left: 86px;
+        
+        &__wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        &__text {
+            color: #fff;
+            font-size: 130px;
+            display: flex;
+            flex: 0 0 auto;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: marquee 120s linear infinite;
+            >p{
+                opacity: 0.3;
+                font-family: 'Montserrat', sans-serif;
+                span {
+                font-weight: bolder;
+                background-image: linear-gradient(to right, #c5e679 10%, #2a9776 45%, #162cac);
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                word-break: keep-all;
+                letter-spacing: -1px;
+                }
+            }
+        }
+        &__title {
+            color: #fff;
+            margin: 150px 0 250px 0;
+            text-align: center;
+            line-height: 50px;
+            
+            >p { 
+                font-size: 40px; 
+                font-weight: 800;
+                span {
+                    color: #98bb45;
+                }
+            }
+            
+        }
+        &__bike {
+            position: absolute;
+            margin-top: 100px;
+            >img {
+                width: 800px;
+            }
+        }
+        &__bottom {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 450px;
+            background: #98bb45;
+            &__content {
+                text-align: center;
+                >h1 {
+                    font-size: 50px;
+                    font-weight: 800;
+                    color: #fff;
+                    margin-bottom: 10px;
+                }
+                >p {
+                    color: #fff;
+                    font-size: 14px;
+                    margin-bottom: 40px;
+                    
+                }
+                
+            }
+           
+        }
+    }
+    @keyframes marquee {
+        0% {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+        100% {
+            -webkit-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-50%, 0, 0);
+        }
+    }
