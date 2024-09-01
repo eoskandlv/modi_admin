@@ -27,7 +27,7 @@ const HomeBar = () => {
                     <div className="homebar-wrap__item">
                         <div className="homebar-wrap__menu">
                             <div className="homebar-wrap__icon">
-                                <FaPenNib className="icon" IoIosClose size="20" />
+                                <FaPenNib className="icon" size="20" />
                                 Author
                             </div>
                         </div>
@@ -37,7 +37,7 @@ const HomeBar = () => {
                     <div className="homebar-wrap__item">
                         <div className="homebar-wrap__menu">
                             <div className="homebar-wrap__icon">
-                                <FaBookTanakh className="icon" IoIosClose size="20" />
+                                <FaBookTanakh className="icon" size="20" />
                                 Novel
                             </div>
                         </div>
@@ -47,7 +47,7 @@ const HomeBar = () => {
                     <div className="homebar-wrap__item">
                         <div className="homebar-wrap__menu">
                             <div className="homebar-wrap__icon">
-                                <FaBookQuran className="icon" IoIosClose size="20" />
+                                <FaBookQuran className="icon" size="20" />
                                 Comix
                             </div>
                         </div>
@@ -57,7 +57,7 @@ const HomeBar = () => {
                     <div className="homebar-wrap__item">
                         <div className="homebar-wrap__menu">
                             <div className="homebar-wrap__icon">
-                                <BsCalendar2HeartFill className="icon" IoIosClose size="20" />
+                                <BsCalendar2HeartFill className="icon" size="20" />
                                 Event
                             </div>
                         </div>

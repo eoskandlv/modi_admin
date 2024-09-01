@@ -26,31 +26,26 @@ const MainSection = () => {
             <FaStar
               color="#fff"
               className="background-icon__item"
-              IoIosClose
               size="50"
             />
             <FaStar
               color="#fff"
               className="background-icon__item"
-              IoIosClose
               size="50"
             />
             <FaStar
               color="#fff"
               className="background-icon__item"
-              IoIosClose
               size="50"
             />
             <FaStar
               color="#fff"
               className="background-icon__item"
-              IoIosClose
               size="50"
             />
             <FaStar
               color="#fff"
               className="background-icon__item"
-              IoIosClose
               size="50"
             />
           </div>
