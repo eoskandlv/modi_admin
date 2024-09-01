@@ -1,34 +1,19 @@
 import AuthorList from "../components/author/AuthorList";
+import AuthorSave from "../components/author/AuthorSave";
+import AuthorDetial from "../components/author/AuthorDetail";
 import "./Author.scss"
+import { useParams } from "react-router-dom";
 
-const dummyList = [
-  {
-    id: 1,
-    author: "hyun",
-    content: "첫번째",
-    emotion: 1,
-    created_date: new Date().getTime(),
-  },
-  {
-    id: 2,
-    author: "jeong",
-    content: "두번째",
-    emotion: 2,
-    created_date: new Date().getTime(),
-  },
-  {
-    id: 3,
-    author: "react",
-    content: "3번째",
-    emotion: 3,
-    created_date: new Date().getTime(),
-  },
-];
 const Author = () => {
+  const currentPath = window.location.pathname;
     return (
       <>
-        <div className="content">
-          <AuthorList dummyList={dummyList}/>
+        <div className="author-wrap">
+          {currentPath === "/author/list" && <AuthorList />}
+          {currentPath === "/author" && <AuthorSave />}
+          {currentPath === "/author/detail/:id" && <AuthorDetial />}
+          {/* <AuthorList authorsList={authorsList} /> */}
+          {/* <AuthorSave /> */}
         </div>
       </>
     );

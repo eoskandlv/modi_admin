@@ -2,99 +2,133 @@
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃ @소스코드: 정의 명세서                             ┃
 ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┣ @설명: 작가등록   
+┣ @설명: 작품목록   
 ┣ @작성: 이수정, 2024-08-31                        
 ┣ @내역: 이수정, 2024-08-31, 최초등록                
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-import "./AuthorSave.scss";
+import "./AuthorList.scss";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import Select from "react-select";
-import Radio from "../Radio/Radio";
-import RadioGroup from "../Radio/RadioGroup";
-import SaveBtn from "../Button/SaveBtn/SaveBtn";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import Btn from "../Button/Btn";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../../firebase";
 
-const AuthorList = ({ dummyList }) => {
-    console.log(dummyList);
+const app = initializeApp(firebaseConfig);
+
+const AuthorList = () => {
+   const [authorsList, setAuthorsList] = useState([]);
+   const [tableStatus, setTableStatus] = useState("loading");
+
+   const fetchData = async () => {
+     const db = getFirestore(app);
+     const querySnapshot = await getDocs(collection(db, "product"));
+     querySnapshot.forEach((doc) => {
+      //  console.log(doc.data());
+     });
+     const fetchedData = querySnapshot.docs.map((doc) => ({
+       id: doc.id,
+       ...doc.data(),
+     }));
+     if (fetchedData.length == 0) {
+       setTableStatus("empty");
+       console.log(tableStatus);
+     } else {
+       setTableStatus("loading");
+       setTableStatus("ok");
+     }
+     setAuthorsList(fetchedData);
+   };
+
+  useEffect(() => {
+     fetchData();
+   }, []);
+  
+  const navigate = useNavigate();  
+  const onClickButton = () => {
+    navigate("/author");
+  };
+  const itemClick = (id) => {
+    authorsList.forEach(data => {
+      if (data.id == id) {
+        navigate(`/author/detail/${id}`);
+      }
+    })
+  }
+
   return (
     <>
-      <div className="contents">
-        <div className="contents-head">
-          <h2>작품 목록</h2>
-        </div>
-        <div className="contents-body test">
-          <div className="table__wrap">
-            <table className="contents-table">
-              <colgroup>
-                <col width="10%" />
-                <col width="*" />
-                <col width="15%" />
-                <col width="20%" />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th>번호</th>
-                  <th>제목</th>
-                  <th>카테고리</th>
-                  <th>등록일</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-show="tableStatus =='loading'"
-                  className="contents-table__loading"
-                >
-                  <td colSpan="5">
-                    <p>데이터를 불러오는 중입니다.</p>
-                  </td>
-                </tr>
-                <tr
-                  v-show="tableStatus == 'empty'"
-                  className="contents-table__empty"
-                >
-                  <td colSpan="5">
-                    <div>
-                      <v-icon color="#000" large>
-                        mdi-alert-circle-outline
-                      </v-icon>
-                      <h4>등록된 게시물이 없습니다.</h4>
-                    </div>
-                  </td>
-                </tr>
-                {/* <tr v-show="tableStatus == 'error'" class="contents-table__error">
-                            <td colspan="5">
-                                <div>
-                                    <v-icon color="#000" large>mdi-alert-circle-outline</v-icon>
-                                    <h4>데이터 로드에 실패하였습니다. <br>잠시후에 다시 시도해주세요.</h4>
-                                </div>
-                            </td>
-                        </tr> */}
-                {/* <tr v-for="(item, index) in tableItems" :key="index" v-show="tableStatus == 'ok'">
-                            <td class="text-center">{{ item.rowNum }}</td>
-                            <td>
-                                    <!-- @click="$router.push('/notice/detail/' + item.seq)" -->
-                                <div 
-                                    @click="tableTdClick(item.seq)"
-                                    class="text-title"
-                                >
-                                    {{ item.title }}
-                                </div>
-                            </td>
-                            <td class="text-center">{{ item.empName }}</td>
-                            <td class="text-center">{{ dbDateTimeFormatting(item.updateAt) }}</td>
-                        </tr> */}
-                {dummyList.map((data) => (
-                  <tr key={data.id}>
-                    <td className="text-center">{data.emotion}</td>
-                    <td className="text-center">{data.content}</td>
-                    <td className="text-center">{data.author}</td>
-                    <td className="text-center">{data.created_date}</td>
+      <div className="author-wrap">
+        <div className="contents">
+          <div className="contents-head">
+            <h2>작품 목록</h2>
+          </div>
+          <div className="contents-body test">
+            <div className="table__wrap">
+              <table className="contents-table">
+                <colgroup>
+                  <col width="*" />
+                  <col width="10%" />
+                  <col width="10%" />
+                  <col width="10%" />
+                  <col width="10%" />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>제목</th>
+                    <th>이름</th>
+                    <th>작품종류</th>
+                    <th>카테고리</th>
+                    <th>코멘트</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {tableStatus === "empty" && (
+                    <tr className="table-basic__empty">
+                      <td colSpan="6">
+                        <div>
+                          <h3>등록된 데이터가 없습니다.</h3>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+
+                  {tableStatus === "loading" && (
+                    <tr className="table-basic__loading">
+                      <td colSpan="6">
+                        <div className="progress">
+                          <div className="spinner"></div>
+                          <p>데이터를 불러오는 중입니다.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+
+                  {tableStatus === "ok" &&
+                    authorsList.map((data, key) => (
+                      <tr key={key}>
+                        <td className="text-center">
+                          <a onClick={() => itemClick(data.id)}>{data.title}</a>
+                        </td>
+                        <td className="text-center">{data.name}</td>
+                        <td className="text-center">
+                          {data.sort == "COMMON" ? "일반" : "습작"}
+                        </td>
+                        <td className="text-center">{data.category.label}</td>
+                        <td className="text-center">
+                          {data.comment == "ALLOW" ? "허용" : "비허용"}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="save-button" onClick={onClickButton}>
+              <Btn colorType="save" />
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./AlertDialog.scss"
+import "../../scss/common.scss"
 
 function AlertDialog({
   dialogToggle,
@@ -58,13 +59,13 @@ function AlertDialog({
     switch (type) {
       case "save":
       case "modify":
-        return "✔️";
+        return "✔";
       case "delete":
         return "🗑️";
       case "ok":
         return "✔️";
       case "error":
-        return "⚠️";
+        return "❗️";
       default:
         return "ℹ️";
     }
@@ -83,8 +84,8 @@ function AlertDialog({
       case "error":
         return (
           <>
-            <h2>에러가 발생했습니다.</h2>
             <div className="error-table-wrap">
+              <h2>에러가 발생했습니다.</h2>
               <table className="error-table">
                 <colgroup>
                   <col width="100px" />
@@ -126,7 +127,7 @@ function AlertDialog({
         <div className="dialog-header" style={dialogTitleColor()}>
           <h2>{title}</h2>
           <button className="dialog-close" onClick={onClose}>
-            ✖️
+            x
           </button>
         </div>
         <div className="dialog-body">
@@ -139,14 +140,14 @@ function AlertDialog({
           {["save", "modify", "delete"].includes(type) ? (
             <>
               <button
-                className="button button-secondary"
+                className="buttons buttons-secondary"
                 disabled={isLoading}
                 onClick={onClose}
               >
                 아니오
               </button>
               <button
-                className="button button-primary"
+                className="buttons buttons-primary"
                 onClick={handleConfirmClick}
                 disabled={isLoading}
               >
@@ -154,7 +155,7 @@ function AlertDialog({
               </button>
             </>
           ) : (
-            <button className="button button-primary" onClick={onClose}>
+            <button className="buttons buttons-primary" onClick={onClose}>
               확인
             </button>
           )}

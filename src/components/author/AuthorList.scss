@@ -1,7 +1,6 @@
-
-
 .contents {
     &-head {
+        font-size: 24px;
         margin-bottom: 20px;
         h2::before {
             content: "";
@@ -78,4 +77,11 @@
     display: flex;
     justify-content:flex-end;
     margin: 10px 0;
+}
+a {
+    color: royalblue;
+    cursor: pointer;
+    &:hover {
+        color: #98bb45;
+    }
 }

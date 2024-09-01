@@ -76,7 +76,13 @@ const HomeBar = () => {
             <div className="homebar-wrap__item">
               <div
                 className="homebar-wrap__menu"
-                style={pathname === "/author" ? activeStyle : {}}
+                style={
+                  pathname === "/author" ||
+                  pathname === "/author/list" ||
+                  pathname === "/author/detail"
+                    ? activeStyle
+                    : {}
+                }
               >
                 <div className="homebar-wrap__icon">
                   <FaPenNib className="icon" size="20" />
@@ -90,7 +96,6 @@ const HomeBar = () => {
             onClick={() =>
               showCustomMessageDialog("Novel section is coming soon!")
             }
-            // onClick={() => setDialogToggle(true)}
             style={{ textDecoration: "none" }}
           >
             <div className="homebar-wrap__item">
@@ -108,7 +113,9 @@ const HomeBar = () => {
           <Link
             to={"/comix"}
             // onClick={() => setDialogToggle(true)}
-            onClick={() => showCustomMessageDialog("Comix section is coming soon!")}
+            onClick={() =>
+              showCustomMessageDialog("Comix section is coming soon!")
+            }
             style={{ textDecoration: "none" }}
           >
             <div className="homebar-wrap__item">
@@ -142,8 +149,8 @@ const HomeBar = () => {
         type={dialogType}
         dialogToggle={dialogToggle}
         config={config}
-        onClose={handleDialogClose} // 다이얼로그 닫기 핸들러
-        onConfirm={handleConfirm} // 다이얼로그 확인 버튼 클릭 핸들러
+        onClose={handleDialogClose}
+        onConfirm={handleConfirm}
       />
     </>
   );

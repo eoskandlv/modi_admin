@@ -2,34 +2,21 @@
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃ @소스코드: 정의 명세서                             ┃
 ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┣ @설명: 작품등록   
+┣ @설명: 작가등록   
 ┣ @작성: 이수정, 2024-08-31                        
 ┣ @내역: 이수정, 2024-08-31, 최초등록                
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-import "./AuthorSave.scss";
+import "./LoginForm.scss";
 import { useForm } from "react-hook-form";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Select from "react-select";
 import Radio from "../Radio/Radio";
 import RadioGroup from "../Radio/RadioGroup";
-import Btn from "../Button/Btn";
-import AlertDialog from "../AlertDialog/AlertDialog";
-import {
-  collection,
-  addDoc,
-  getFirestore,
-  getDocs,
-} from "firebase/firestore";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../../firebase";
+import SaveBtn from "../Button/Btn";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const AuthorSave = ({ }) => {
+const AuthorSave = () => {
   // validation check
   const {
     register,
@@ -39,20 +26,7 @@ const AuthorSave = ({ }) => {
     formState: { errors, isSubmitting, isDirty, isValid },
   } = useForm({ mode: "onChange" });
 
-  const [formData, setFormData] = useState(null);
-  // 작품 저장 함수
-  const saveData = async (data) => {
-    await addDoc(collection(db, "product"), {
-      name: data.useName,
-      category: data.selectCategory,
-      sort: data.workType,
-      title: data.titleName,
-      introduce: data.workDescription,
-      content: data.workContents,
-      comment: data.commentValue,
-    });
-    console.log(data, "Data saved");
-  };
+  const onValid = (data) => console.log(data, "onvalid");
   const onInvalid = (data) => console.log(data, "onInvalid");
 
   // 작품종류
@@ -64,19 +38,22 @@ const AuthorSave = ({ }) => {
 
   // 카테고리
   const category = [
-    { value: "fantasy", label: "판타지" },
-    { value: "romance", label: "로맨스" },
-    { value: "poetry", label: "시" },
-    { value: "fear", label: "공포" },
+    { value: "a", label: "판타지" },
+    { value: "b", label: "무협" },
+    { value: "c", label: "로맨스" },
+    { value: "d", label: "로맨스판타지" },
+    { value: "e", label: "시" },
+    { value: "f", label: "추리" },
+    { value: "g", label: "공포" },
   ];
   const [selectCategory, setSelectCateory] = useState(category[0]);
   const handleCategoryChange = (selectedOption) => {
-    setValue("selectCategory", selectedOption);
+    setValue("selectCategory", selectedOption.value);
   };
 
   // 카테고리 기본값을 useForm에 설정
   useEffect(() => {
-    setValue("selectCategory", selectCategory);
+    setValue("selectCategory", selectCategory.value);
   }, [setValue, selectCategory]);
 
   // 코멘트
@@ -86,51 +63,6 @@ const AuthorSave = ({ }) => {
     setValue("commentValue", value);
   };
 
-  // 작가이름
-  const [useName, setUserName] = useState("김작가");
-  useEffect(() => {
-    setValue("useName", useName);
-  }, [setValue, useName]);
-
-  // 다이얼로그
-  const [dialogToggle, setDialogToggle] = useState(false);
-  const [dialogType, setDialogType] = useState("save"); // 'modify', 'delete'
-  const [config, setConfig] = useState({
-    title: "",
-    titleColor: "",
-    error: {
-      code: 403,
-      message: "not authentication",
-    },
-    custom: {
-      icon: "mdi-check-circle-outline",
-      message: "custom message",
-    },
-  });
-
-  // Save 버튼 클릭 시 다이얼로그 오픈
-  const handleSaveClick = (data) => {
-    setFormData(data); 
-    setDialogToggle(true); 
-  };
-  const navigate = useNavigate();  
-  // 다이얼로그 확인 버튼 클릭 시 데이터 저장
-  const handleConfirm = async () => {
-    if (formData) {
-      await saveData(formData);
-      navigate("/author/list");
-    }
-    setDialogToggle(false); 
-  };
-  // 다이얼로그 닫기
-  const handleDialogClose = () => {
-    setDialogToggle(false);
-  };
-
-  // 목록으로 이동
-  const onClick = () => {
-    navigate("/author/list")
-  }
   return (
     <>
       <div className="contents">
@@ -139,26 +71,13 @@ const AuthorSave = ({ }) => {
         </div>
         <div className="contents-body test">
           <div className="table__wrap">
-            <form onSubmit={handleSubmit(handleSaveClick, onInvalid)}>
+            <form onSubmit={handleSubmit(onValid, onInvalid)}>
               <table className="contents-table table-style-01">
                 <colgroup>
                   <col width="20%" />
                   <col width="*" />
                 </colgroup>
                 <tbody>
-                  <tr>
-                    <td>이름</td>
-                    <td>
-                      <div className="table-group">
-                        <input
-                          className="table-group__input"
-                          disabled
-                          {...register("useName", { required: true })}
-                          value={useName}
-                        />
-                      </div>
-                    </td>
-                  </tr>
                   <tr>
                     <td>작품종류</td>
                     <td>
@@ -312,20 +231,12 @@ const AuthorSave = ({ }) => {
                 </tbody>
               </table>
               <div className="save-button">
-                <Btn colorType="list" onClick={onClick} />
-                <Btn type="submit" colorType="save" />
+                <SaveBtn type="submit" />
               </div>
             </form>
           </div>
         </div>
       </div>
-      <AlertDialog
-        type={dialogType}
-        dialogToggle={dialogToggle}
-        config={config}
-        onClose={handleDialogClose}
-        onConfirmSave={handleConfirm}
-      />
     </>
   );
 };
