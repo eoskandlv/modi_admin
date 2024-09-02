@@ -1,3 +1,5 @@
+@import "../../../scss/mixin";
+
 .third-index {
         position: relative;
         width: 100%;
@@ -69,3 +71,52 @@
             }
         }
     }
+
+    // 반응형 스타일
+
+@include media(mobile,tablet) {
+    .third-index {
+        margin-left: 0;
+        &__wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+        }
+        &__title {
+            margin-bottom: 40px;
+            >span { font-size: 40px; }
+            
+        }
+        &__content {
+            display: flex;
+            flex-direction: column;
+            &__left {
+                display: none;
+
+            }
+            &__right {
+                width: 100%;
+                height: 100%;
+                background: #98bb45;
+
+                .left-wrap {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    padding: 80px;
+                    height: 100%;
+                    &__text {
+                        color: #000;
+                        >h1 {font-size: 35px;}
+                        >p { 
+                            padding-bottom: 20px;
+                            font-size: 18px; 
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

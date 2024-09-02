@@ -1,5 +1,12 @@
+ @import "../../scss/mixin";
+
 .author-wrap {
-    width: calc(100% - 700px);
-    padding: 40px;
-    margin: 0 380px;
+    // width: calc(100% - 700px);
+    padding: 40px 10px 0 166px;
+    
+}
+@include media(mobile,tablet) {
+.author-wrap {
+   padding: 120px 10px 0 10px;
+}
 }

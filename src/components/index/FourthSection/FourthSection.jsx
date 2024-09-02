@@ -13,9 +13,9 @@ const FourthSection = () => {
   }, []);
 
   return (
-    <div className="fifth-index">
-      <div className="fifth-index__wrap">
-        <div className="fifth-index__text">
+    <div className="fourth-index">
+      <div className="fourth-index__wrap">
+        <div className="fourth-index__text">
           <p>
             <span>JOARA</span> : NOVEL·COMIX·EVENT&nbsp;
           </p>
@@ -35,7 +35,7 @@ const FourthSection = () => {
             <span>JOARA</span> : NOVEL·COMIX·EVENT&nbsp;
           </p>
         </div>
-        <div className="fifth-index__title">
+        <div className="fourth-index__title">
           <p data-aos="fade-up">
             트렌디 인기 신작, 연재, 완결, BL, 만화, 소설까지
             <br />
@@ -44,11 +44,11 @@ const FourthSection = () => {
             <span>스토리 본능</span>을 깨우다.
           </p>
         </div>
-        <div className="fifth-index__bike" data-aos="fade-left">
+        <div className="fourth-index__bike" data-aos="fade-left">
           <img src="/images/book.png" />
         </div>
-        <div className="fifth-index__bottom">
-          <div className="fifth-index__bottom__content">
+        <div className="fourth-index__bottom">
+          <div className="fourth-index__bottom__content">
             <h1 data-aos="fade-up">지금 바로 조아라와 함께해 보세요!</h1>
             <p data-aos="fade-up">
               웹소설의 시작 조아라에서 매일 업데이트 되는 무료 웹소설과 웹툰을

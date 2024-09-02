@@ -1,5 +1,12 @@
+ @import "../../scss/mixin";
+
 .content {
-    width: calc(100% - 700px);
-    padding: 40px;
-    margin: 0 380px;
+    // width: calc(100% - 700px);
+    padding: 40px 10px 0 126px;
+    
+}
+@include media(mobile,tablet) {
+.content {
+   padding: 120px 40px 0 10px;
+}
 }

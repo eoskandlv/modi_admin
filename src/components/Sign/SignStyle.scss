@@ -1,4 +1,6 @@
+
 $font-family: 'Montserrat', sans-serif;
+@import "../../scss/mixin";
 
 
 .container {
@@ -67,6 +69,17 @@ $font-family: 'Montserrat', sans-serif;
     }
 
 }
+
+@include media(mobile,tablet) {
+    .container {
+        padding: 50px 0 0 0;
+        form {
+            padding: 80px 10px;
+
+        }
+    }
+}
+
 
 
 

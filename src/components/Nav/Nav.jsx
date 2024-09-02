@@ -95,7 +95,11 @@ const HomeBar = () => {
     <>
       <div className="homebar">
         <div className="homebar-wrap">
-          <Link to={"/"} style={{ textDecoration: "none" }}>
+          <Link
+            className="homebar-wrap__item"
+            to={"/"}
+            style={{ textDecoration: "none" }}
+          >
             <div className="homebar-wrap__logo">JOARA</div>
           </Link>
           <div className="homebar-wrap__item" onClick={handleAuthorClick}>
@@ -120,9 +124,10 @@ const HomeBar = () => {
             onClick={() =>
               showCustomMessageDialog("Novel section is coming soon!")
             }
+            className="homebar-wrap__item"
             style={{ textDecoration: "none" }}
           >
-            <div className="homebar-wrap__item">
+            <div className="homebar-wrap__novel">
               <div
                 className="homebar-wrap__menu"
                 style={pathname === "/novel" ? activeStyle : {}}
@@ -135,8 +140,12 @@ const HomeBar = () => {
             </div>
           </Link>
           {user === null ? (
-            <Link to={"/login"} style={{ textDecoration: "none" }}>
-              <div className="homebar-wrap__item login-btn">
+            <Link
+              className="homebar-wrap__item"
+              to={"/login"}
+              style={{ textDecoration: "none" }}
+            >
+              <div className="login-btn">
                 <div
                   className="homebar-wrap__menu"
                   style={
