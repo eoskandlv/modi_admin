@@ -3,13 +3,12 @@ body {
     margin: 0;
     overflow-x: hidden;
     padding-right: 86px;
-
 }
 
 @include media(mobile,tablet) {
 
-body{
-    padding-right: 0;
+    body{
+        padding-right: 0;
 
-}
+    }
 }
