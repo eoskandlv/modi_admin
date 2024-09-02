@@ -1,6 +1,6 @@
-import AuthorList from "../../components/author/AuthorList";
-import AuthorSave from "../../components/author/AuthorSave";
-import AuthorDetial from "../../components/author/AuthorDetail";
+import AuthorList from "../../components/Author/AuthorList";
+import AuthorSave from "../../components/Author/AuthorSave";
+import AuthorDetial from "../../components/Author/AuthorDetail";
 import "./Author.scss"
 import { useParams } from "react-router-dom";
 
