@@ -137,7 +137,6 @@ function AlertDialog({
     <div className={`dialog ${dialogToggle ? "open" : ""}`}>
       <div
         className="dialog-overlay"
-        onClick={onClose}
         onClick={(e) => e.stopPropagation()}
       ></div>
       <div className="dialog-content" onClick={(e) => e.stopPropagation()}>

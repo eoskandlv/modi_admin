@@ -28,7 +28,6 @@ const SignUp = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state);
 
   // 회원가입 함수
   const onSubmit = async (data) => {
