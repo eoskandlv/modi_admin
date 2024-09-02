@@ -8,35 +8,32 @@
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-import "./LoginStyle.scss";
+import "./SignStyle.scss";
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
 import {
-  Routes,
-  Route,
   Link,
-  useLocation,
   useNavigate,
 } from "react-router-dom";
 import { signIn } from "../../redux/actions";
 import { LOGIN_SUCCESS, LOGIN_FAILURE } from "../../redux/actions"; 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginSuccess, loginFailure } from "../../redux/reducers";
 
 
-const Login = () => {
+const SignIn = () => {
   // validation check
   const {
     register,
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, isSubmitting, isDirty, isValid },
+    formState: { errors },
   } = useForm({ mode: "onChange" });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // 로그인 함수
   const onSubmit = async (data) => {
     try {
       const response = await dispatch(signIn(data.loginId, data.loginPassword));
@@ -108,4 +105,4 @@ const Login = () => {
     </>
   );
 };
-export default Login;
+export default SignIn;

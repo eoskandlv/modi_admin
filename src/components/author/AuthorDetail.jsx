@@ -2,7 +2,7 @@
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃ @소스코드: 정의 명세서                             ┃
 ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┣ @설명: 작품등록   
+┣ @설명: 작품상세 
 ┣ @작성: 이수정, 2024-08-31                        
 ┣ @내역: 이수정, 2024-08-31, 최초등록                
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
@@ -35,39 +35,62 @@ import { useParams } from "react-router-dom";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const AuthorDetail = ({}) => {
+const AuthorDetail = ({ }) => {
   // validation check
-  
   const {
     register,
     handleSubmit,
     setValue,
     watch,
     control,
-    formState: { errors, isSubmitting, isDirty, isValid },
+    formState: { errors },
   } = useForm({ mode: "onChange" });
+  // 페이지 이동
+  const navigate = useNavigate();
+  // 로딩
   const [loading, setLoading] = useState(true);
+  // 폼 저장
   const [formData, setFormData] = useState(null);
-  // 작품 저장 함수
-const { id } = useParams(); 
- const saveData = async (data) => {
-   const docRef = doc(db, "product", id);
-
-   await updateDoc(docRef, {
-     name: data.useName,
-     category: data.selectCategory,
-     sort: data.workType,
-     title: data.titleName,
-     introduce: data.workDescription,
-     content: data.workContents,
-     comment: data.commentValue,
-   });
-
- 
- };
-
   // 작품종류
   const [workType, setWorkType] = useState("COMMON");
+
+  // 코멘트
+  const [commentValue, setCommentValue] = useState("ALLOW");
+  // 이름
+  const user = useSelector((state) => state.auth.user);
+  const [useName, setUserName] = useState(user.username || "");
+  // 다이얼로그
+  const [dialogToggle, setDialogToggle] = useState(false);
+  const [dialogType, setDialogType] = useState("modify"); // 'modify', 'delete'
+  const [config, setConfig] = useState({
+    title: "",
+    titleColor: "",
+    error: {
+      code: 403,
+      message: "not authentication",
+    },
+    custom: {
+      icon: "mdi-check-circle-outline",
+      message: "custom message",
+    },
+  });
+
+  // 작품 저장 함수
+  const { id } = useParams();
+  const saveData = async (data) => {
+    const docRef = doc(db, "product", id);
+    await updateDoc(docRef, {
+      name: data.useName,
+      category: data.selectCategory,
+      sort: data.workType,
+      title: data.titleName,
+      introduce: data.workDescription,
+      content: data.workContents,
+      comment: data.commentValue,
+    });
+  };
+
+  // 작품종류
   const handleWorkTypeChange = (value) => {
     setWorkType(value);
     setValue("workType", value);
@@ -91,34 +114,15 @@ const { id } = useParams();
   }, [setValue, selectCategory]);
 
   // 코멘트
-  const [commentValue, setCommentValue] = useState("ALLOW");
   const handleCommentChange = (value) => {
     setCommentValue(value);
     setValue("commentValue", value);
   };
 
   // 작가이름
-  const user = useSelector((state) => state.auth.user);
-  const [useName, setUserName] = useState(user.username || "");
   useEffect(() => {
     setValue("useName", useName);
   }, [setValue, useName]);
-
-  // 다이얼로그
-  const [dialogToggle, setDialogToggle] = useState(false);
-  const [dialogType, setDialogType] = useState("modify"); // 'modify', 'delete'
-  const [config, setConfig] = useState({
-    title: "",
-    titleColor: "",
-    error: {
-      code: 403,
-      message: "not authentication",
-    },
-    custom: {
-      icon: "mdi-check-circle-outline",
-      message: "custom message",
-    },
-  });
 
   // Save 버튼 클릭 시 다이얼로그 오픈
   const handleSaveClick = (data) => {
@@ -129,7 +133,7 @@ const { id } = useParams();
       setDialogToggle(true);
     }
   };
-  const navigate = useNavigate();
+
   // 다이얼로그 확인 버튼 클릭 시 데이터 저장
   const handleConfirm = async () => {
     if (formData) {
@@ -139,53 +143,55 @@ const { id } = useParams();
     }
     setDialogToggle(false);
   };
+
   // 다이얼로그 닫기
   const handleDialogClose = () => {
     setDialogToggle(false);
   };
-const [authorsList, setAuthorsList] = useState([]);
+
+  // 작품 값 함수
   const fetchData = async () => {
-  const querySnapshot = await getDocs(collection(db, "product"));
-  let fetchedData = [];
-  let documentData = null;
-
-  querySnapshot.forEach((doc) => {
-    if (doc.id === id) {
-      documentData = doc.data(); 
-    }
-    fetchedData.push({
-      id: doc.id,
-      ...doc.data(),
+    const querySnapshot = await getDocs(collection(db, "product"));
+    let fetchedData = [];
+    let documentData = null;
+    querySnapshot.forEach((doc) => {
+      if (doc.id === id) {
+        documentData = doc.data();
+      }
+      fetchedData.push({
+        id: doc.id,
+        ...doc.data(),
+      });
     });
-  });
 
-  if (documentData) {
-    setValue("titleName", documentData.title );
-    setValue("workType", documentData.sort || "COMMON"); 
-    setWorkType(documentData.sort || "COMMON");
-    setValue("selectCategory",documentData.category || category[0]); 
-    setValue("workDescription", documentData.introduce);
-    setValue("workContents", documentData.content);
-    setValue("commentValue", documentData.comment || "ALLOW");
-    setCommentValue(documentData.comment || "ALLOW");
-  }
-  setLoading(false);
-};
-useEffect(() => {
-  fetchData();
-}, [id]);
-  
+    if (documentData) {
+      setValue("titleName", documentData.title);
+      setValue("workType", documentData.sort || "COMMON");
+      setWorkType(documentData.sort || "COMMON");
+      setValue("selectCategory", documentData.category || category[0]);
+      setValue("workDescription", documentData.introduce);
+      setValue("workContents", documentData.content);
+      setValue("commentValue", documentData.comment || "ALLOW");
+      setCommentValue(documentData.comment || "ALLOW");
+    }
+    setLoading(false);
+  };
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+
+  // 작품종류 기본값을 useForm에 설정
   useEffect(() => {
     setValue("workType", workType);
-  }, [workType, setValue])
+  }, [workType, setValue]);
 
-const handleDelete = async () => {
+  // 작품 삭제
+  const handleDelete = async () => {
     const docRef = doc(db, "product", id);
     await deleteDoc(docRef);
     console.log("Document deleted", id);
     navigate("/author/list");
-  // setDialogToggle(false);
-};
+  };
   return (
     <>
       <Loading loading={loading} />
@@ -196,7 +202,7 @@ const handleDelete = async () => {
           </div>
           <div className="contents-body test">
             <div className="table__wrap">
-              <form onSubmit={handleSubmit(handleSaveClick )}>
+              <form onSubmit={handleSubmit(handleSaveClick)}>
                 <table className="contents-table table-style-01">
                   <colgroup>
                     <col width="20%" />

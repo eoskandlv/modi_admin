@@ -1,10 +1,10 @@
 import "./Login.scss"
-import LoginForm from "../../components/Login/LoginForm"
+import SignIn from "../../components/Sign/SignIn";
 
 const Login = () => {
     return (
-        <>
-            <LoginForm/>
+      <>
+        <SignIn />
       </>
     );
 }

@@ -1,14 +1,20 @@
-import "./LoginStyle.scss";
+/* 
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ @소스코드: 정의 명세서                             ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┣ @설명: 회원가입 
+┣ @작성: 이수정, 2024-09-01                        
+┣ @내역: 이수정, 2024-09-01, 최초등록                
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+import "./SignStyle.scss";
 import { useForm } from "react-hook-form";
-import {
-  Link,
-  useNavigate,
-} from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../redux/actions";
-import { SIGN_UP_SUCCESS, SIGN_UP_FAILURE } from "../../redux/actions"; 
-import { signUpSuccess, signUpFailure } from "../../redux/reducers";
+import { SIGN_UP_SUCCESS, SIGN_UP_FAILURE } from "../../redux/actions";
+import { signUpSuccess } from "../../redux/reducers";
 
 const SignUp = () => {
   // validation check
@@ -17,14 +23,14 @@ const SignUp = () => {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, isSubmitting, isDirty, isValid },
+    formState: { errors },
   } = useForm({ mode: "onChange" });
 
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state);
 
+  // 회원가입 함수
   const onSubmit = async (data) => {
     try {
       const response = await dispatch(
@@ -129,6 +135,6 @@ const SignUp = () => {
       </form>
     </div>
   );
-}
+};
 
 export default SignUp;

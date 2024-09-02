@@ -1,6 +1,16 @@
+/* 
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ @소스코드: 정의 명세서                             ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┣ @설명: 다이얼로그
+┣ @작성: 이수정, 2024-09-01                     
+┣ @내역: 이수정, 2024-09-01, 최초등록
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
 import React, { useState, useEffect } from "react";
-import "./AlertDialog.scss"
-import "../../scss/common.scss"
+import "./AlertDialog.scss";
+import "../../scss/common.scss";
 
 function AlertDialog({
   dialogToggle,

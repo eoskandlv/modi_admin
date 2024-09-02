@@ -1,11 +1,11 @@
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import HomeBar from "./components/Nav/Nav";
 import Index from "./pages/Index"
-import Author from "./pages/Author";
-import AuthorList from "./components/author/AuthorList";
-import AuthorDetail from "./components/author/AuthorDetail";
+import Author from "./pages/Author/Author";
+import AuthorList from "./components/Author/AuthorList";
+import AuthorDetail from "./components/Author/AuthorDetail";
 import Login from "./pages/Login/Login";
-import SignUp from "./components/Login/SignUp"
+import SignUp from "./components/Sign/SignUp";
 import "./App.scss";
 import "./scss/reset.scss";
 import "./scss/common.scss"
@@ -22,7 +22,6 @@ function Router() {
             <Route path="/" element={<Index />} />
             <Route path="/author" element={<Author />} />
             <Route path="/novel" element={<Preparing />} />
-            <Route path="/comix" element={<Preparing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/author/list" element={<AuthorList />} />

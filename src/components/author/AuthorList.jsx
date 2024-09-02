@@ -9,9 +9,8 @@
 */
 
 import "./AuthorList.scss";
-import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Btn from "../Button/Btn";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
@@ -20,43 +19,47 @@ import { firebaseConfig } from "../../firebase";
 const app = initializeApp(firebaseConfig);
 
 const AuthorList = () => {
-   const [authorsList, setAuthorsList] = useState([]);
-   const [tableStatus, setTableStatus] = useState("loading");
-
-   const fetchData = async () => {
-     const db = getFirestore(app);
-     const querySnapshot = await getDocs(collection(db, "product"));
-     querySnapshot.forEach((doc) => {
-      //  console.log(doc.data());
-     });
-     const fetchedData = querySnapshot.docs.map((doc) => ({
-       id: doc.id,
-       ...doc.data(),
-     }));
-     if (fetchedData.length == 0) {
-       setTableStatus("empty");
-     } else {
-       setTableStatus("loading");
-       setTableStatus("ok");
-     }
-     setAuthorsList(fetchedData);
-   };
+  // 페이지 이동
+  const navigate = useNavigate();
+  // 리스트
+  const [authorsList, setAuthorsList] = useState([]);
+  // 테이블 status
+  const [tableStatus, setTableStatus] = useState("loading");
+  // 리스트 값 함수
+  const fetchData = async () => {
+    const db = getFirestore(app);
+    const querySnapshot = await getDocs(collection(db, "product"));
+    querySnapshot.forEach((doc) => {});
+    const fetchedData = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    if (fetchedData.length == 0) {
+      setTableStatus("empty");
+    } else {
+      setTableStatus("loading");
+      setTableStatus("ok");
+    }
+    setAuthorsList(fetchedData);
+  };
 
   useEffect(() => {
-     fetchData();
-   }, []);
-  
-  const navigate = useNavigate();  
+    fetchData();
+  }, []);
+
+  // 작품 등록 이동 이벤트
   const onClickButton = () => {
     navigate("/author");
   };
+
+  // 작품 상세 이동 이벤트
   const itemClick = (id) => {
-    authorsList.forEach(data => {
+    authorsList.forEach((data) => {
       if (data.id == id) {
         navigate(`/author/detail/${id}`);
       }
-    })
-  }
+    });
+  };
 
   return (
     <>

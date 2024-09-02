@@ -15,14 +15,12 @@ import { IoIosLock } from "react-icons/io";
 import { IoIosUnlock } from "react-icons/io";
 import { FaBookTanakh } from "react-icons/fa6";
 import { FaBookQuran } from "react-icons/fa6";
-import Author from "../../pages/Author";
 import AlertDialog from "../AlertDialog/AlertDialog";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutSuccess } from "../../redux/reducers";
 
 const HomeBar = () => {
-const user = useSelector((state) => state.auth.user);
   const activeStyle = {
     background: "white",
     color: "#98bb45",
@@ -31,10 +29,19 @@ const user = useSelector((state) => state.auth.user);
     background: "white",
     color: "#162cac",
   };
+  // path 이동
   const { pathname } = useLocation();
+  // 페이지 이동
+  const navigate = useNavigate();
+  // dispatch
+  const dispatch = useDispatch();
+  // 상세 이동
   const isDetailPage = useMatch("/author/detail/:id");
+  // 이름
+  const user = useSelector((state) => state.auth.user);
+  // 다이얼로그
   const [dialogToggle, setDialogToggle] = useState(false);
-  const [dialogType, setDialogType] = useState("customMessage"); // 또는 'modify', 'delete' 등 필요한 타입
+  const [dialogType, setDialogType] = useState("customMessage"); // 'save','modify', 'delete'
   const [config, setConfig] = useState({
     title: "",
     titleColor: "",
@@ -47,12 +54,11 @@ const user = useSelector((state) => state.auth.user);
       message: "custom message",
     },
   });
-  const dispatch = useDispatch();
-
+  // 다이얼로그 닫기
   const handleDialogClose = () => {
     setDialogToggle(false);
   };
-
+  // 다이얼로그 열기
   const handleConfirm = () => {
     handleDialogClose();
   };
@@ -69,13 +75,14 @@ const user = useSelector((state) => state.auth.user);
     setDialogToggle(true);
   };
 
-  const navigate = useNavigate();
+  // 로그아웃
   const handleLogOutClick = () => {
     dispatch(logoutSuccess());
     navigate("/");
-    window.location.reload()
+    window.location.reload();
   };
 
+  // 로그인,로그아웃에 따라 author 분리
   const handleAuthorClick = () => {
     if (user === null) {
       showCustomMessageDialog("로그인 후 이용해주세요.");
@@ -83,6 +90,7 @@ const user = useSelector((state) => state.auth.user);
       navigate("/author");
     }
   };
+
   return (
     <>
       <div className="homebar">
@@ -90,23 +98,23 @@ const user = useSelector((state) => state.auth.user);
           <Link to={"/"} style={{ textDecoration: "none" }}>
             <div className="homebar-wrap__logo">JOARA</div>
           </Link>
-            <div className="homebar-wrap__item" onClick={handleAuthorClick}>
-              <div
-                className="homebar-wrap__menu"
-                style={
-                  pathname === "/author" ||
-                  pathname === "/author/list" ||
-                  isDetailPage
-                    ? activeStyle
-                    : {}
-                }
-              >
-                <div className="homebar-wrap__icon">
-                  <FaPenNib className="icon" size="20" />
-                  Author
-                </div>
+          <div className="homebar-wrap__item" onClick={handleAuthorClick}>
+            <div
+              className="homebar-wrap__menu"
+              style={
+                pathname === "/author" ||
+                pathname === "/author/list" ||
+                isDetailPage
+                  ? activeStyle
+                  : {}
+              }
+            >
+              <div className="homebar-wrap__icon">
+                <FaPenNib className="icon" size="20" />
+                Author
               </div>
             </div>
+          </div>
           <Link
             to={"/novel"}
             onClick={() =>
@@ -122,26 +130,6 @@ const user = useSelector((state) => state.auth.user);
                 <div className="homebar-wrap__icon">
                   <FaBookTanakh className="icon" size="20" />
                   Novel
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link
-            to={"/comix"}
-            // onClick={() => setDialogToggle(true)}
-            onClick={() =>
-              showCustomMessageDialog("Comix section is coming soon!")
-            }
-            style={{ textDecoration: "none" }}
-          >
-            <div className="homebar-wrap__item">
-              <div
-                className="homebar-wrap__menu"
-                style={pathname === "/comix" ? activeStyle : {}}
-              >
-                <div className="homebar-wrap__icon">
-                  <FaBookQuran className="icon" size="20" />
-                  Comix
                 </div>
               </div>
             </div>

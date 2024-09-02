@@ -10,23 +10,22 @@
 
 import "./AuthorSave.scss";
 import { useForm } from "react-hook-form";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Select from "react-select";
 import Radio from "../Radio/Radio";
 import RadioGroup from "../Radio/RadioGroup";
 import Btn from "../Button/Btn";
 import AlertDialog from "../AlertDialog/AlertDialog";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useSelector } from "react-redux";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../../firebase";
 import {
   collection,
   addDoc,
   getFirestore,
   getDocs,
 } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../../firebase";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -38,10 +37,35 @@ const AuthorSave = ({ }) => {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, isSubmitting, isDirty, isValid },
+    formState: { errors },
   } = useForm({ mode: "onChange" });
-
+  // 페이지 이동
+  const navigate = useNavigate();
+  // 폼 저장
   const [formData, setFormData] = useState(null);
+  // 작품종류
+  const [workType, setWorkType] = useState("COMMON");
+  // 코멘트
+  const [commentValue, setCommentValue] = useState("ALLOW");
+  // 이름
+  const user = useSelector((state) => state.auth.user);
+  const [useName, setUserName] = useState(user.username || "");
+  // 다이얼로그
+  const [dialogToggle, setDialogToggle] = useState(false);
+  const [dialogType, setDialogType] = useState("save"); // 'modify', 'delete'
+  const [config, setConfig] = useState({
+    title: "",
+    titleColor: "",
+    error: {
+      code: 403,
+      message: "not authentication",
+    },
+    custom: {
+      icon: "mdi-check-circle-outline",
+      message: "custom message",
+    },
+  });
+
   // 작품 저장 함수
   const saveData = async (data) => {
     await addDoc(collection(db, "product"), {
@@ -53,11 +77,9 @@ const AuthorSave = ({ }) => {
       content: data.workContents,
       comment: data.commentValue,
     });
-    console.log(data, "Data saved");
   };
 
   // 작품종류
-  const [workType, setWorkType] = useState("COMMON");
   const handleWorkTypeChange = (value) => {
     setWorkType(value);
     setValue("workType", value);
@@ -81,41 +103,22 @@ const AuthorSave = ({ }) => {
   }, [setValue, selectCategory]);
 
   // 코멘트
-  const [commentValue, setCommentValue] = useState("ALLOW");
   const handleCommentChange = (value) => {
     setCommentValue(value);
     setValue("commentValue", value);
   };
 
   // 작가이름
-  const user = useSelector((state) => state.auth.user);
-  const [useName, setUserName] = useState(user.username || "");
   useEffect(() => {
     setValue("useName", useName);
   }, [setValue, useName]);
 
-  // 다이얼로그
-  const [dialogToggle, setDialogToggle] = useState(false);
-  const [dialogType, setDialogType] = useState("save"); // 'modify', 'delete'
-  const [config, setConfig] = useState({
-    title: "",
-    titleColor: "",
-    error: {
-      code: 403,
-      message: "not authentication",
-    },
-    custom: {
-      icon: "mdi-check-circle-outline",
-      message: "custom message",
-    },
-  });
-
   // Save 버튼 클릭 시 다이얼로그 오픈
   const handleSaveClick = (data) => {
-    setFormData(data); 
-    setDialogToggle(true); 
+    setFormData(data);
+    setDialogToggle(true);
   };
-  const navigate = useNavigate();  
+
   // 다이얼로그 확인 버튼 클릭 시 데이터 저장
   const handleConfirm = async () => {
     if (formData) {
@@ -124,6 +127,7 @@ const AuthorSave = ({ }) => {
     }
     setDialogToggle(false);
   };
+
   // 다이얼로그 닫기
   const handleDialogClose = () => {
     setDialogToggle(false);
@@ -131,10 +135,9 @@ const AuthorSave = ({ }) => {
 
   // 목록으로 이동
   const onClick = () => {
-    navigate("/author/list")
-  }
+    navigate("/author/list");
+  };
 
- 
   return (
     <>
       <div className="contents">

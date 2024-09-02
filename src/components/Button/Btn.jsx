@@ -1,9 +1,17 @@
-import "./Btn.scss"
+/* 
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ @소스코드: 정의 명세서                             ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┣ @설명: 버튼 컴포넌트   
+┣ @작성: 이수정, 2024-09-01                        
+┣ @내역: 이수정, 2024-09-01, 최초등록                
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+import "./Btn.scss";
 import { useState, useEffect } from "react";
 
-const SaveBtn = ({  type, colorType, onClick  }) => {
-  const [title, setTitle] = useState("");
-
+const SaveBtn = ({ type, colorType, onClick }) => {
   const buttonColor = () => {
     switch (colorType) {
       case "save":
@@ -27,7 +35,7 @@ const SaveBtn = ({  type, colorType, onClick  }) => {
       case "list":
         return "목록";
     }
-  }
+  };
   return (
     <>
       <button
@@ -41,4 +49,4 @@ const SaveBtn = ({  type, colorType, onClick  }) => {
   );
 };
 
-export default SaveBtn
+export default SaveBtn;

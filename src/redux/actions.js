@@ -1,3 +1,4 @@
+// actions.js
 import {
   getAuth,
   createUserWithEmailAndPassword,
