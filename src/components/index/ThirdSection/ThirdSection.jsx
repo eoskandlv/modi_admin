@@ -6,6 +6,7 @@ import "aos/dist/aos.css";
 import MainButton from "../../../components/Button/MainButton";
 
 const ThirdSection = () => {
+  const url = "https://www.joara.com/main/shortcut/recommend/contest";
   useEffect(() => {
     AOS.init();
   }, []);
@@ -37,7 +38,7 @@ const ThirdSection = () => {
                   <br />
                   자신의 상상력을 발휘하여 자유롭게 도전해보세요. <br />
                 </p>
-              <MainButton />
+                <MainButton onClick={() => window.open(url, "_blank")} />
               </div>
 
               {/* <v-btn class="sample-btn">

@@ -8,6 +8,7 @@ import MainButton from "../../Button/MainButton"
 
 
 const FourthSection = () => {
+  const url = "https://www.joara.com/main/recommend";
   useEffect(() => {
     AOS.init();
   }, []);
@@ -54,7 +55,7 @@ const FourthSection = () => {
               웹소설의 시작 조아라에서 매일 업데이트 되는 무료 웹소설과 웹툰을
               취향에 맞게 즐겨보세요.
             </p>
-            <MainButton />
+            <MainButton onClick={() => window.open(url,'_blank')} />
           </div>
         </div>
       </div>

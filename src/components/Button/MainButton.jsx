@@ -8,11 +8,11 @@ import "./MainButton.scss"
 ┣ @내역: 이수정, 2024-08-30, 최초등록                
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-const MainButton = () => {
-    return (
-      <button className="button" data-aos="fade-up">
-        LET`S GO
-      </button>
-    );
-}
+const MainButton = ({ onClick }) => {
+  return (
+    <button className="button" data-aos="fade-up" onClick={onClick}>
+      LET`S GO
+    </button>
+  );
+};
 export default MainButton;
