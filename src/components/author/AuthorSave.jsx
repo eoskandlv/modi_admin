@@ -17,6 +17,8 @@ import Radio from "../Radio/Radio";
 import RadioGroup from "../Radio/RadioGroup";
 import Btn from "../Button/Btn";
 import AlertDialog from "../AlertDialog/AlertDialog";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   collection,
   addDoc,
@@ -53,7 +55,6 @@ const AuthorSave = ({ }) => {
     });
     console.log(data, "Data saved");
   };
-  const onInvalid = (data) => console.log(data, "onInvalid");
 
   // 작품종류
   const [workType, setWorkType] = useState("COMMON");
@@ -87,7 +88,8 @@ const AuthorSave = ({ }) => {
   };
 
   // 작가이름
-  const [useName, setUserName] = useState("김작가");
+  const user = useSelector((state) => state.auth.user);
+  const [useName, setUserName] = useState(user.username || "");
   useEffect(() => {
     setValue("useName", useName);
   }, [setValue, useName]);
@@ -120,7 +122,7 @@ const AuthorSave = ({ }) => {
       await saveData(formData);
       navigate("/author/list");
     }
-    setDialogToggle(false); 
+    setDialogToggle(false);
   };
   // 다이얼로그 닫기
   const handleDialogClose = () => {
@@ -131,6 +133,8 @@ const AuthorSave = ({ }) => {
   const onClick = () => {
     navigate("/author/list")
   }
+
+ 
   return (
     <>
       <div className="contents">
@@ -139,7 +143,7 @@ const AuthorSave = ({ }) => {
         </div>
         <div className="contents-body test">
           <div className="table__wrap">
-            <form onSubmit={handleSubmit(handleSaveClick, onInvalid)}>
+            <form onSubmit={handleSubmit(handleSaveClick)}>
               <table className="contents-table table-style-01">
                 <colgroup>
                   <col width="20%" />

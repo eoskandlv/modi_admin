@@ -8,18 +8,21 @@
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 import "./Nav.scss"
 import { FaPenNib } from "react-icons/fa";
 import { IoIosLock } from "react-icons/io";
+import { IoIosUnlock } from "react-icons/io";
 import { FaBookTanakh } from "react-icons/fa6";
 import { FaBookQuran } from "react-icons/fa6";
 import Author from "../../pages/Author";
 import AlertDialog from "../AlertDialog/AlertDialog";
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutSuccess } from "../../redux/reducers";
 
 const HomeBar = () => {
+const user = useSelector((state) => state.auth.user);
   const activeStyle = {
     background: "white",
     color: "#98bb45",
@@ -29,6 +32,7 @@ const HomeBar = () => {
     color: "#162cac",
   };
   const { pathname } = useLocation();
+  const isDetailPage = useMatch("/author/detail/:id");
   const [dialogToggle, setDialogToggle] = useState(false);
   const [dialogType, setDialogType] = useState("customMessage"); // 또는 'modify', 'delete' 등 필요한 타입
   const [config, setConfig] = useState({
@@ -43,15 +47,14 @@ const HomeBar = () => {
       message: "custom message",
     },
   });
+  const dispatch = useDispatch();
 
   const handleDialogClose = () => {
     setDialogToggle(false);
   };
 
-  const handleConfirm = (type) => {
-    // 예를 들어 'save', 'modify' 등의 타입에 따른 동작을 처리
-    console.log(`${type} 확인 버튼이 클릭되었습니다.`);
-	  handleDialogClose(); // 다이얼로그 닫기
+  const handleConfirm = () => {
+    handleDialogClose();
   };
 
   // Custom Message 설정 함수
@@ -63,7 +66,22 @@ const HomeBar = () => {
         message: message,
       },
     }));
-	  setDialogToggle(true);
+    setDialogToggle(true);
+  };
+
+  const navigate = useNavigate();
+  const handleLogOutClick = () => {
+    dispatch(logoutSuccess());
+    navigate("/");
+    window.location.reload()
+  };
+
+  const handleAuthorClick = () => {
+    if (user === null) {
+      showCustomMessageDialog("로그인 후 이용해주세요.");
+    } else {
+      navigate("/author");
+    }
   };
   return (
     <>
@@ -72,14 +90,13 @@ const HomeBar = () => {
           <Link to={"/"} style={{ textDecoration: "none" }}>
             <div className="homebar-wrap__logo">JOARA</div>
           </Link>
-          <Link to={"/author"} style={{ textDecoration: "none" }}>
-            <div className="homebar-wrap__item">
+            <div className="homebar-wrap__item" onClick={handleAuthorClick}>
               <div
                 className="homebar-wrap__menu"
                 style={
                   pathname === "/author" ||
                   pathname === "/author/list" ||
-                  pathname === "/author/detail"
+                  isDetailPage
                     ? activeStyle
                     : {}
                 }
@@ -90,7 +107,6 @@ const HomeBar = () => {
                 </div>
               </div>
             </div>
-          </Link>
           <Link
             to={"/novel"}
             onClick={() =>
@@ -130,19 +146,34 @@ const HomeBar = () => {
               </div>
             </div>
           </Link>
-          <Link to={"/login"} style={{ textDecoration: "none" }}>
+          {user === null ? (
+            <Link to={"/login"} style={{ textDecoration: "none" }}>
+              <div className="homebar-wrap__item login-btn">
+                <div
+                  className="homebar-wrap__menu"
+                  style={
+                    pathname === "/login" || pathname === "/signup"
+                      ? loginActiveStyle
+                      : {}
+                  }
+                >
+                  <div className="homebar-wrap__icon">
+                    <IoIosLock className="icon" size="20" />
+                    Login
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ) : (
             <div className="homebar-wrap__item login-btn">
-              <div
-                className="homebar-wrap__menu"
-                style={pathname === "/login" ? loginActiveStyle : {}}
-              >
+              <div className="homebar-wrap__menu" onClick={handleLogOutClick}>
                 <div className="homebar-wrap__icon">
-                  <IoIosLock className="icon" size="20" />
-                  Login
+                  <IoIosUnlock className="icon" size="20" />
+                  Logout
                 </div>
               </div>
             </div>
-          </Link>
+          )}
         </div>
       </div>
       <AlertDialog

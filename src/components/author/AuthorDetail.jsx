@@ -17,6 +17,8 @@ import Radio from "../Radio/Radio";
 import RadioGroup from "../Radio/RadioGroup";
 import AlertDialog from "../AlertDialog/AlertDialog";
 import Btn from "../Button/Btn";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "../Spinner/Spinner";
 
 import {
   collection,
@@ -44,10 +46,10 @@ const AuthorDetail = ({}) => {
     control,
     formState: { errors, isSubmitting, isDirty, isValid },
   } = useForm({ mode: "onChange" });
-  
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState(null);
   // 작품 저장 함수
-  const { id } = useParams(); 
+const { id } = useParams(); 
  const saveData = async (data) => {
    const docRef = doc(db, "product", id);
 
@@ -61,9 +63,8 @@ const AuthorDetail = ({}) => {
      comment: data.commentValue,
    });
 
-   console.log("Document updated", data);
+ 
  };
-  const onInvalid = (data) => console.log(data, "onInvalid");
 
   // 작품종류
   const [workType, setWorkType] = useState("COMMON");
@@ -97,7 +98,8 @@ const AuthorDetail = ({}) => {
   };
 
   // 작가이름
-  const [useName, setUserName] = useState("김작가");
+  const user = useSelector((state) => state.auth.user);
+  const [useName, setUserName] = useState(user.username || "");
   useEffect(() => {
     setValue("useName", useName);
   }, [setValue, useName]);
@@ -120,7 +122,6 @@ const AuthorDetail = ({}) => {
 
   // Save 버튼 클릭 시 다이얼로그 오픈
   const handleSaveClick = (data) => {
-    console.log(dialogType)
     if (dialogType == "modify") {
       setFormData(data);
       setDialogToggle(true);
@@ -133,6 +134,7 @@ const AuthorDetail = ({}) => {
   const handleConfirm = async () => {
     if (formData) {
       await saveData(formData);
+      setLoading(false);
       navigate("/author/list");
     }
     setDialogToggle(false);
@@ -159,7 +161,7 @@ const [authorsList, setAuthorsList] = useState([]);
 
   if (documentData) {
     setValue("titleName", documentData.title );
-    setValue("workType", documentData.sort || "COMMON"); // Ensure default value
+    setValue("workType", documentData.sort || "COMMON"); 
     setWorkType(documentData.sort || "COMMON");
     setValue("selectCategory",documentData.category || category[0]); 
     setValue("workDescription", documentData.introduce);
@@ -167,6 +169,7 @@ const [authorsList, setAuthorsList] = useState([]);
     setValue("commentValue", documentData.comment || "ALLOW");
     setCommentValue(documentData.comment || "ALLOW");
   }
+  setLoading(false);
 };
 useEffect(() => {
   fetchData();
@@ -185,6 +188,7 @@ const handleDelete = async () => {
 };
   return (
     <>
+      <Loading loading={loading} />
       <div className="author-wrap">
         <div className="contents">
           <div className="contents-head">
@@ -192,7 +196,7 @@ const handleDelete = async () => {
           </div>
           <div className="contents-body test">
             <div className="table__wrap">
-              <form onSubmit={handleSubmit(handleSaveClick, onInvalid)}>
+              <form onSubmit={handleSubmit(handleSaveClick )}>
                 <table className="contents-table table-style-01">
                   <colgroup>
                     <col width="20%" />

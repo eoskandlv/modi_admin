@@ -10,12 +10,12 @@ function AlertDialog({
   onConfirmSave,
   onConfirmModify,
   onConfirmDelete,
+  onConfirmJoin,
 }) {
   const [title, setTitle] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-      
+  useEffect(() => {
     if (dialogToggle) {
       setIsLoading(false);
       init();
@@ -26,7 +26,7 @@ function AlertDialog({
     setTitle(config.title || "알림");
   };
 
-    const dialogTitleColor = () => {
+  const dialogTitleColor = () => {
     switch (type) {
       case "modify":
         return { backgroundColor: "#2196F3" };
@@ -43,6 +43,9 @@ function AlertDialog({
     switch (type) {
       case "save":
         onConfirmSave();
+        break;
+      case "join":
+        onConfirmJoin();
         break;
       case "modify":
         onConfirmModify();
@@ -64,6 +67,8 @@ function AlertDialog({
         return "🗑️";
       case "ok":
         return "✔️";
+      case "join":
+        return "✔️";
       case "error":
         return "❗️";
       default:
@@ -81,6 +86,8 @@ function AlertDialog({
         return "삭제하시겠습니까?";
       case "ok":
         return "정상처리되었습니다.";
+      case "join":
+        return "회원가입이 완료되었습니다.";
       case "error":
         return (
           <>
@@ -137,7 +144,7 @@ function AlertDialog({
           </div>
         </div>
         <div className="dialog-actions">
-          {["save", "modify", "delete"].includes(type) ? (
+          {["save", "modify", "delete", "join"].includes(type) ? (
             <>
               <button
                 className="buttons buttons-secondary"

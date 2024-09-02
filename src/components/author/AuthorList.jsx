@@ -35,7 +35,6 @@ const AuthorList = () => {
      }));
      if (fetchedData.length == 0) {
        setTableStatus("empty");
-       console.log(tableStatus);
      } else {
        setTableStatus("loading");
        setTableStatus("ok");
@@ -100,7 +99,7 @@ const AuthorList = () => {
                     <tr className="table-basic__loading">
                       <td colSpan="6">
                         <div className="progress">
-                          <div className="spinner"></div>
+                          <div className="loading"></div>
                           <p>데이터를 불러오는 중입니다.</p>
                         </div>
                       </td>

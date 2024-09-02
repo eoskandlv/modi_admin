@@ -5,6 +5,7 @@ import Author from "./pages/Author";
 import AuthorList from "./components/author/AuthorList";
 import AuthorDetail from "./components/author/AuthorDetail";
 import Login from "./pages/Login/Login";
+import SignUp from "./components/Login/SignUp"
 import "./App.scss";
 import "./scss/reset.scss";
 import "./scss/common.scss"
@@ -23,6 +24,7 @@ function Router() {
             <Route path="/novel" element={<Preparing />} />
             <Route path="/comix" element={<Preparing />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/author/list" element={<AuthorList />} />
             <Route path="/author/detail/:id" element={<AuthorDetail />} />
           </Routes>
