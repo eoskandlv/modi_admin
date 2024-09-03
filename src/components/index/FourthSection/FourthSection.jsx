@@ -46,7 +46,7 @@ const FourthSection = () => {
           </p>
         </div>
         <div className="fourth-index__bike" data-aos="fade-left">
-          <img src="https://eoskandlv.github.io/modi_admin/images/book.png" />
+          <img src="./images/book.png" />
         </div>
         <div className="fourth-index__bottom">
           <div className="fourth-index__bottom__content">
