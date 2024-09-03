@@ -23,17 +23,16 @@ const SecondSection = () => {
               <div className="left-wrap__text">
                 <h1>띠링, 연재가 도착했습니다</h1>
                 <p>
-                  다양한 세계관, 장르소설 그리고 서브컬쳐 패러디까지!
-                  <br />
+                  다양한 세계관, 장르소설 그리고 서브컬쳐 패러디까지!<br/>
                   조아라 모바일 앱으로도 웹소설을 편하게 즐기실 수 있어요
                 </p>
               </div>
             </div>
           </div>
           <div className="second-index__content__right">
-            <img src="https://eoskandlv.github.io/images/app/app_01.png" />
-            <img src="https://eoskandlv.github.io/images/app/app_02.png" />
-            <img src="https://eoskandlv.github.io/images/app/app_03.png" />
+            <img src="/images/app/app_01.png" />
+            <img src="/images/app/app_02.png" />
+            <img src="/images/app/app_03.png" />
           </div>
         </div>
         <div
@@ -53,9 +52,9 @@ const SecondSection = () => {
             </div>
           </div>
           <div className="second-index__content__right">
-            <img src="https://eoskandlv.github.io/images/app/voice_01.png" />
-            <img src="https://eoskandlv.github.io/images/app/voice_02.png" />
-            <img src="https://eoskandlv.github.io/images/app/voice_03.png" />
+            <img src="/images/app/voice_01.png" />
+            <img src="/images/app/voice_02.png" />
+            <img src="/images/app/voice_03.png" />
           </div>
         </div>
         <div
@@ -77,9 +76,9 @@ const SecondSection = () => {
             </div>
           </div>
           <div className="second-index__content__right">
-            <img src="https://eoskandlv.github.io/images/app/update_01.png" />
-            <img src="https://eoskandlv.github.io/images/app/update_02.png" />
-            <img src="https://eoskandlv.github.io/images/app/update_03.png" />
+            <img src="/images/app/update_01.png" />
+            <img src="/images/app/update_02.png" />
+            <img src="/images/app/update_03.png" />
           </div>
         </div>
         <div className="second-index__text">
