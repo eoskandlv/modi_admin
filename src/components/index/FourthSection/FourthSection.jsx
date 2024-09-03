@@ -46,7 +46,7 @@ const FourthSection = () => {
           </p>
         </div>
         <div className="fourth-index__bike" data-aos="fade-left">
-          <img src="/images/book.png" />
+          <img src="https://eoskandlv.github.io/modi_admin/images/book.png" />
         </div>
         <div className="fourth-index__bottom">
           <div className="fourth-index__bottom__content">
@@ -55,7 +55,7 @@ const FourthSection = () => {
               웹소설의 시작 조아라에서 매일 업데이트 되는 무료 웹소설과 웹툰을
               취향에 맞게 즐겨보세요.
             </p>
-            <MainButton onClick={() => window.open(url,'_blank')} />
+            <MainButton onClick={() => window.open(url, "_blank")} />
           </div>
         </div>
       </div>
